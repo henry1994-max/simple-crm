@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Firestore } from '@angular/fire/firestore';
+import { AngularFirestore, docChanges } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscriber } from 'rxjs';
 import { User } from 'src/models/user.class';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 
@@ -25,14 +23,13 @@ export class UserComponent implements OnInit {
       .collection('users')
       .valueChanges({idField: 'customIdName'})
       .subscribe((changes: any) => {
-        console.log('Received changes from DB');
+        console.log('Received changes from DB', changes);
         this.allUsers = changes;
-
       });
   }
 
 
-  openDialog(): void {
+  openDialog() {
     this.dialog.open(DialogAddUserComponent);
 
   }
